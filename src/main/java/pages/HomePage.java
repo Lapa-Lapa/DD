@@ -10,7 +10,7 @@ import java.util.List;
 
 public class HomePage implements BasePage {
     private static final Logger LOGGER = Logger.getLogger(HomePage.class);
-    private static final String URL = "https://www.tut.by/";
+    private static final String URL = "https://www.tut.by";
 
     private static final By HAMBURGER_MENU_BUTTON = By.xpath("//span[@class='b-icon icon-burger']");
     private static final By MENU_SECTION = By.xpath("//ul[@class='b-topbar-more-list']");
@@ -25,18 +25,18 @@ public class HomePage implements BasePage {
 
     public boolean isUrlEqualsExpected() {
         LOGGER.info("Actual URL: " + driver().getCurrentUrl() + "; " +
-                "Expected URL: " + URL + "\n");
+                "Expected URL: " + URL);
         return URL.equals(driver().getCurrentUrl());
     }
 
     public void openHomePage() {
-        LOGGER.info(URL + " is open\n");
+        LOGGER.info(URL + " is open");
         driver().navigate().to(URL);
     }
 
     public void clickHamburgerMenuButton() {
         WaitersAndUtils.highlightClickUnhighlightElement(HAMBURGER_MENU_BUTTON, driver());
-        LOGGER.info("Menu is open\n");
+        LOGGER.info("Menu is open");
     }
 
     public List<String> getMenuList() {
@@ -59,14 +59,14 @@ public class HomePage implements BasePage {
             WaitersAndUtils.highlightClickUnhighlightElement(AFISHA, driver());
             return new AfishaPage();
         } else {
-            LOGGER.error(MENU_SECTION_NAME + " - is invalid Test Data\n");
+            LOGGER.error(MENU_SECTION_NAME + " - is invalid Test Data");
             return new HomePage();
         }
     }
 
     public void focusSearchField() {
         WaitersAndUtils.highlightClickUnhighlightElement(SEARCH_FIELD, driver());
-        LOGGER.info("sectionNumber");
+        LOGGER.info("Search field focused");
     }
 
     public void search(String SEARCH_TEXT) {
@@ -84,7 +84,7 @@ public class HomePage implements BasePage {
     public int getSearchResults() {
         WaitersAndUtils.waitForAllElementsPresent(SEARCH_RESULTS, driver());
         WaitersAndUtils.waitForElementsVisible(SEARCH_RESULTS, driver());
-        LOGGER.info(driver().findElements(SEARCH_RESULTS).size() + "\n");
+        LOGGER.info("Appeared: " + driver().findElements(SEARCH_RESULTS).size() + " search results");
         return driver().findElements(SEARCH_RESULTS).size();
     }
 }

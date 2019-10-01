@@ -20,7 +20,7 @@ Feature: Tests
       | NEWS    |
       | FINANCE |
 
-  @Test @run
+  @Test
   Scenario: [4] Search pre-results
     Given Open home page
     And Search for "телефон"

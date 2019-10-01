@@ -44,6 +44,7 @@ public class HomePageSteps {
     public void search(String SEARCH_TEXT) {
         homePage.focusSearchField();
         homePage.search(SEARCH_TEXT);
+        LOGGER.info("Searching for text: " + SEARCH_TEXT);
     }
 
     @Then("Verify new page is open")
@@ -52,7 +53,14 @@ public class HomePageSteps {
     }
 
     @Then("Verify \"([^\"]+)\" results appear")
-    public void checkNumberOfResults(int NUMBER_OF_RESULTS) {
-        Assert.assertEquals(NUMBER_OF_RESULTS, homePage.getSearchResults());
+    public void checkNumberOfResults(int EXPECTED_NUMBER_OF_RESULTS) {
+        LOGGER.info("Expected: " + EXPECTED_NUMBER_OF_RESULTS + " search results");
+        int ACTUAL_NUMBER_OF_RESULTS = homePage.getSearchResults();
+        if (EXPECTED_NUMBER_OF_RESULTS == ACTUAL_NUMBER_OF_RESULTS) {
+            LOGGER.info("Test: PASSED");
+        } else {
+            LOGGER.info("Test: FAILED");
+        }
+        Assert.assertEquals(EXPECTED_NUMBER_OF_RESULTS, ACTUAL_NUMBER_OF_RESULTS);
     }
 }

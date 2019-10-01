@@ -32,12 +32,10 @@ public class WebDriverSingleton {
     }
 
     /**
-     * Static Factory Method
-     * https://cucumber.io/docs/guides/browser-automation
+     * Static Factory Method https://cucumber.io/docs/guides/browser-automation
      */
     private static WebDriver initWebDriver() {
         String browserName = System.getProperty("browser");
-        LOGGER.info(browserName);
         WebDriver driver;
         switch (browserName) {
             case "firefox":
@@ -83,9 +81,10 @@ public class WebDriverSingleton {
             default:
                 throw new RuntimeException("Unsupported webdriver: " + browserName);
         }
+        LOGGER.info("Browser: " + browserName + " - successfully started");
         driver.manage().timeouts().pageLoadTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);//IMPLICIT
         driver.manage().timeouts().setScriptTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);//IMPLICIT
-        LOGGER.info("PageLoadTimeout was set to: " + DEFAULT_TIMEOUT + " seconds\n");
+        LOGGER.info("PageLoadTimeout was set to: " + DEFAULT_TIMEOUT + " seconds");
         return driver;
     }
 
