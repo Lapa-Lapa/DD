@@ -1,13 +1,22 @@
 package pages;
 
+import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import web_driver.WebDriverSingleton;
 
-public interface BasePage {
+//TODO: BasePage hould be Abstract Class!!! - Done
+public abstract class BasePage {
+    private static final Logger LOGGER = Logger.getLogger(BasePage.class);
 
-    default WebDriver driver() {
+    public abstract String getURL();
+
+    static WebDriver driver() {
         return WebDriverSingleton.getWebDriverInstanceChrome();
     }
 
-    boolean isUrlEqualsExpected();
+    public boolean isUrlEqualsExpected() {
+        LOGGER.info("Actual URL: " + driver().getCurrentUrl() + "; " +
+                "Expected URL: " + getURL());
+        return getURL().equals(driver().getCurrentUrl());
+    }
 }

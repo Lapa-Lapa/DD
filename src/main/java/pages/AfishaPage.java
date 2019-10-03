@@ -2,17 +2,16 @@ package pages;
 
 import org.apache.log4j.Logger;
 
-public class AfishaPage implements BasePage {
+public class AfishaPage extends BasePage {
     private static final Logger LOGGER = Logger.getLogger(AfishaPage.class);
-    private static final String URL = "https://afisha.tut.by";
+    private static final String URL = "https://afisha.tut.by/";
 
     public AfishaPage() {
         LOGGER.info(URL + " - is open");
     }
 
-    public boolean isUrlEqualsExpected() {
-        LOGGER.info("Actual URL: " + driver().getCurrentUrl() + "; " +
-                "Expected URL: " + URL);
-        return URL.equals(driver().getCurrentUrl());
+    @Override
+    public String getURL() {
+        return URL;
     }
 }

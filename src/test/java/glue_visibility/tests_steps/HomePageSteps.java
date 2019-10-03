@@ -11,56 +11,73 @@ import org.junit.Assert;
 import pages.BasePage;
 import pages.HomePage;
 
-import java.util.List;
-
 public class HomePageSteps {
     private static final Logger LOGGER = Logger.getLogger(HomePageSteps.class);
     private final HomePage homePage = new HomePage();
     private BasePage newPage;
 
+    /**
+     * Page opening by URL
+     */
     @Given("^Open home page$")
     public void open_home_page() {
         homePage.openHomePage();
     }
 
+    /**
+     * Clicking hamburger menu button
+     */
     @When("^Click hamburger menu button$")
     public void clickHamburgerMenuButton() {
         homePage.clickHamburgerMenuButton();
     }
 
+    /**
+     * Verification of actual list to match expected hardcoded in business_objects
+     */
     @Then("^Verify that all menu sections present$")
-    public void check() {
-        List<String> expectedMenuList = MenuList.getExpectedMenuList();
-        LOGGER.info("EXPECTED MENU LIST CONSIST OF " + expectedMenuList.size() + " SECTIONS: " + expectedMenuList.toString());
-        Assert.assertTrue(ResultsAnalyzer.isListsEqual(homePage.getMenuList(), expectedMenuList));
+    public void checkAllMenuSectionsPresent() {
+        //TODO: Move messages into Asserts - Done
+        Assert.assertTrue("Actual menu list differs from expected!", ResultsAnalyzer.isListsEqual(homePage.getMenuList(), MenuList.getExpectedMenuList()));
     }
 
+    //TODO: Java doc create for all methogs - Done
+    /**
+     * Clicking menu section by its name
+     * @param menuSectionName - section that should be present in menu section
+     */
     @When("Click \"([^\"]+)\" menu section")
-    public void clickAnyMenuSection(String MENU_SECTION_NAME) {
-        newPage = homePage.clickAnyMenuSection(MENU_SECTION_NAME);
+    //TODO: naming methods(clickMenuSectionByName) fix - Done
+
+    public void clickMenuSectionByName(String menuSectionName) {
+        newPage = homePage.clickMenuSectionByName(menuSectionName);
     }
 
-    @And("Search for \"([^\"]+)\"")
-    public void search(String SEARCH_TEXT) {
+    /**
+     * Focusing into an element "search field" and typing text in it.
+     * @param searchText - symbols to be typed into an element.
+     */
+    @And("Type \"([^\"]+)\" in Search Field")
+    //TODO: Parameters naming fix - Done
+    public void typingTextInSearchField(String searchText) {
         homePage.focusSearchField();
-        homePage.search(SEARCH_TEXT);
-        LOGGER.info("Searching for text: " + SEARCH_TEXT);
+        homePage.sendKeys(searchText);
     }
 
+    /**
+     * Verification that page is open by URL of the page
+     */
     @Then("Verify new page is open")
     public void checkURL() {
-        newPage.isUrlEqualsExpected();
+        Assert.assertTrue("Actual URL not equals Expected!",newPage.isUrlEqualsExpected());
     }
 
+    /**
+     * Verification results number in search dropdown
+     * @param expectedNumberOfResults - expected number of results in search dropdown
+     */
     @Then("Verify \"([^\"]+)\" results appear")
-    public void checkNumberOfResults(int EXPECTED_NUMBER_OF_RESULTS) {
-        LOGGER.info("Expected: " + EXPECTED_NUMBER_OF_RESULTS + " search results");
-        int ACTUAL_NUMBER_OF_RESULTS = homePage.getSearchResults();
-        if (EXPECTED_NUMBER_OF_RESULTS == ACTUAL_NUMBER_OF_RESULTS) {
-            LOGGER.info("Test: PASSED");
-        } else {
-            LOGGER.info("Test: FAILED");
-        }
-        Assert.assertEquals(EXPECTED_NUMBER_OF_RESULTS, ACTUAL_NUMBER_OF_RESULTS);
+    public void checkNumberOfResults(int expectedNumberOfResults) {
+        Assert.assertTrue("Actual number of results differs from expected!", ResultsAnalyzer.isNumbersEqual(expectedNumberOfResults, homePage.getSearchResults("телефон")));
     }
 }

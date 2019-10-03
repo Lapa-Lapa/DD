@@ -11,6 +11,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import utils.Exceptions.InvalidUrlForAppiumDriver;
+import utils.Exceptions.WebDriverInstantiationException;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -36,6 +38,8 @@ public class WebDriverSingleton {
      */
     private static WebDriver initWebDriver() {
         String browserName = System.getProperty("browser");
+        String platformVersion = System.getProperty("platformVersion");
+        String UDID = System.getProperty("UDID");
         WebDriver driver;
         switch (browserName) {
             case "firefox":
@@ -48,38 +52,25 @@ public class WebDriverSingleton {
                 WebDriverManager.chromedriver().setup();
                 driver = new ChromeDriver(options);
                 break;
-            case "androidHome":
+            case "android":
                 DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
                 desiredCapabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, "ANDROID");
-                desiredCapabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "9");
-                desiredCapabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "SM-G960F");
-                desiredCapabilities.setCapability(MobileCapabilityType.UDID, "2cc4471f3d027ece");
+                desiredCapabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, platformVersion);
+                desiredCapabilities.setCapability(MobileCapabilityType.UDID, UDID);
                 desiredCapabilities.setCapability(MobileCapabilityType.NEW_COMMAND_TIMEOUT, 60);
                 desiredCapabilities.setCapability(MobileCapabilityType.BROWSER_NAME, "Chrome");
                 try {
+                    //TODO: (MalformedURLException(CheckedException)-->From Automatic to custom-->InvalidUrlForAppiumDriverv) - Done
                     URL url = new URL("http://0.0.0.0:4723/wd/hub");
                     driver = new AppiumDriver<MobileElement>(url, desiredCapabilities);
                     break;
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                }
-            case "androidWork":
-                DesiredCapabilities desiredCapabilities2 = new DesiredCapabilities();
-                desiredCapabilities2.setCapability(MobileCapabilityType.PLATFORM_NAME, "ANDROID");
-                desiredCapabilities2.setCapability(MobileCapabilityType.PLATFORM_VERSION, "9");
-                desiredCapabilities2.setCapability(MobileCapabilityType.DEVICE_NAME, "SM-G960F");
-                desiredCapabilities2.setCapability(MobileCapabilityType.UDID, "2aa14f6806027ece");
-                desiredCapabilities2.setCapability(MobileCapabilityType.NEW_COMMAND_TIMEOUT, 60);
-                desiredCapabilities2.setCapability(MobileCapabilityType.BROWSER_NAME, "Chrome");
-                try {
-                    URL url = new URL("http://0.0.0.0:4723/wd/hub");
-                    driver = new AppiumDriver<MobileElement>(url, desiredCapabilities2);
-                    break;
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
+                } catch (MalformedURLException exception) {
+                    exception.printStackTrace();
+                    throw new InvalidUrlForAppiumDriver("ERROR! [" + exception.getMessage() + "]");
                 }
             default:
-                throw new RuntimeException("Unsupported webdriver: " + browserName);
+                //TODO: (RuntimeException-->Beautiful custom exception) - Done
+                throw new WebDriverInstantiationException("ERROR! [" + browserName + "] - is invalid or unsupported name for browser.");
         }
         LOGGER.info("Browser: " + browserName + " - successfully started");
         driver.manage().timeouts().pageLoadTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);//IMPLICIT

@@ -1,13 +1,13 @@
 @Tests
 Feature: Tests
 
-  @Test
+  @Test @run
   Scenario: [1] Drop-down menu sections check
     Given Open home page
     When Click hamburger menu button
     Then Verify that all menu sections present
 
-  @Test
+  @Test @run
   Scenario Outline: [2] Pages under menu sections check
     Given Open home page
     And Click hamburger menu button
@@ -20,8 +20,8 @@ Feature: Tests
       | NEWS    |
       | FINANCE |
 
-  @Test
+  @Test @run
   Scenario: [4] Search pre-results
     Given Open home page
-    And Search for "телефон"
+    And Type "телефон" in Search Field
     Then Verify "10" results appear

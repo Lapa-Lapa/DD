@@ -3,18 +3,21 @@ package web_driver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.concurrent.TimeUnit;
+
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
 
 public class WaitersAndUtils {
 
     private static final int WAIT_FOR_ELEMENT_TIMEOUT_SECONDS = 15;
 
     /**
-     * ЯВНЫЕ (EXPLICIT) ОЖИДАНИЯ
-     * Explicit Waits: https://seleniumjava.com/2016/04/05/the-beginners-guide-to-explicit-waits
+     * ЯВНЫЕ (EXPLICIT) ОЖИДАНИЯ Explicit Waits: https://seleniumjava.com/2016/04/05/the-beginners-guide-to-explicit-waits
      */
     public static void waitForElementClickable(By locator, WebDriver driver) {
         new WebDriverWait(driver, WAIT_FOR_ELEMENT_TIMEOUT_SECONDS).until(ExpectedConditions.elementToBeClickable(locator));
@@ -41,37 +44,44 @@ public class WaitersAndUtils {
     }
 
     /**
-     * НЕЯВНЫЕ ИЛИ СКРЫТЫЕ(IMPLICIT) ОЖИДАНИЯ
-     * Implicit Waits: https://seleniumjava.com/2015/12/12/how-to-make-selenium-webdriver-scripts-faster
+     * НЕЯВНЫЕ ИЛИ СКРЫТЫЕ(IMPLICIT) ОЖИДАНИЯ Implicit Waits: https://seleniumjava.com/2015/12/12/how-to-make-selenium-webdriver-scripts-faster
      */
     public static void wait(WebDriver driver) {
         driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
     }
 
-
-    public static void highlightElement(By locator, WebDriver driver) {
-        ((JavascriptExecutor) driver).executeScript("arguments[0].style.border='3px solid green'", driver.findElement(locator));
+    //TODO: Make 1 more generalized method - Done
+    public static void highlightElement(WebElement element, WebDriver driver, boolean highlight) {
+        String styleBorder;
+        if (highlight) {
+            styleBorder = "'3px solid green'";
+        } else {
+            styleBorder = "'0px'";
+        }
+        ((JavascriptExecutor) driver).executeScript(
+                "arguments[0].style.border=" + styleBorder, element);
     }
 
-    public static void unHighlightElement(By locator, WebDriver driver) {
-        ((JavascriptExecutor) driver).executeScript("arguments[0].style.border='0px'", driver.findElement(locator));
+    public static WebElement findElement(By locator, WebDriver driver) {
+        return driver.findElement(locator);
     }
 
     public static void highlightClickUnhighlightElement(By locator, WebDriver driver) {
-        waitForElementPresent(locator, driver);
-        waitForElementVisible(locator, driver);
+        WebElement element = findElement(locator, driver);
         waitForElementClickable(locator, driver);
-        highlightElement(locator, driver);
+        highlightElement(element, driver,TRUE);
         WaitersAndUtils.wait(driver);
-        driver.findElement(locator).click();
-        unHighlightElement(locator, driver);
+        //TODO: Optimize use one time found element - Done
+        element.click();
+        highlightElement(element, driver, FALSE);
     }
 
     public static void highlightUnhighlightElements(By locator, WebDriver driver) {
+        WebElement element = findElement(locator, driver);
         waitForAllElementsPresent(locator, driver);
         waitForElementsVisible(locator, driver);
-        highlightElement(locator, driver);
+        highlightElement(element, driver, TRUE);
         WaitersAndUtils.wait(driver);
-        unHighlightElement(locator, driver);
+        highlightElement(element, driver, FALSE);
     }
 }
