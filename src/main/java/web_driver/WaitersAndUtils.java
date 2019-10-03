@@ -67,11 +67,11 @@ public class WaitersAndUtils {
     }
 
     public static void highlightAndClickElement(By locator, WebDriver driver) {
-        //WebElement element = findElement(locator, driver);
-        waitForElementClickable(locator, driver);
-        highlightElement(findElement(locator, driver), driver,TRUE);
         //TODO: Optimize use one time found element - Done
-        findElement(locator, driver).click();
+        WebElement element = findElement(locator, driver);
+        waitForElementClickable(locator, driver);
+        highlightElement(element, driver,TRUE);
+        element.click();
     }
 
     public static void highlighElements(By locator, WebDriver driver) {
