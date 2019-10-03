@@ -19,10 +19,16 @@ public class WaitersAndUtils {
     /**
      * ЯВНЫЕ (EXPLICIT) ОЖИДАНИЯ Explicit Waits: https://seleniumjava.com/2016/04/05/the-beginners-guide-to-explicit-waits
      */
-    public static void waitForElementClickable(By locator, WebDriver driver) {
-        new WebDriverWait(driver, WAIT_FOR_ELEMENT_TIMEOUT_SECONDS).until(ExpectedConditions.elementToBeClickable(locator));
+    public static void waitForElementClickable(WebElement element, WebDriver driver) {
+        new WebDriverWait(driver, WAIT_FOR_ELEMENT_TIMEOUT_SECONDS).until(ExpectedConditions.elementToBeClickable(element));
     }
 
+    /**
+     * Waiting for element to be present in DOM
+     * @param locator - used here because WebElement can not be used because of presenceOfElementLocated could be used
+     *                only with locator element.
+     * @param driver  - selenium web driver
+     */
     public static void waitForElementPresent(By locator, WebDriver driver) {
         new WebDriverWait(driver, WAIT_FOR_ELEMENT_TIMEOUT_SECONDS).until(ExpectedConditions.presenceOfElementLocated(locator));
     }
@@ -69,8 +75,8 @@ public class WaitersAndUtils {
     public static void highlightAndClickElement(By locator, WebDriver driver) {
         //TODO: Optimize use one time found element - Done
         WebElement element = findElement(locator, driver);
-        waitForElementClickable(locator, driver);
-        highlightElement(element, driver,TRUE);
+        waitForElementClickable(element, driver);
+        highlightElement(element, driver, TRUE);
         element.click();
     }
 
