@@ -29,3 +29,5 @@ The browser  instance can be shared by all test scripts if we use different anno
 
 Appium is an open source automation tool for running scripts and testing native applications,
 mobile-web applications and hybrid applications on Android or iOS using a webdriver.
+
+-Dbrowser=android -DplatformVersion=9 -DUDID=2cc4471f3d027ece

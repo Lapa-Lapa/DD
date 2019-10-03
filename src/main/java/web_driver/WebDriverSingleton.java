@@ -53,6 +53,7 @@ public class WebDriverSingleton {
                 driver = new ChromeDriver(options);
                 break;
             case "android":
+                //TODO:Make one method for Android
                 DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
                 desiredCapabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, "ANDROID");
                 desiredCapabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, platformVersion);
