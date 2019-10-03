@@ -78,6 +78,6 @@ public class HomePageSteps {
      */
     @Then("Verify \"([^\"]+)\" results appear")
     public void checkNumberOfResults(int expectedNumberOfResults) {
-        Assert.assertTrue("Actual number of results differs from expected!", ResultsAnalyzer.isNumbersEqual(expectedNumberOfResults, homePage.getSearchResults("телефон")));
+        Assert.assertTrue("Actual number of results differs from expected!", ResultsAnalyzer.isNumbersEqual(homePage.getSearchResults("телефон"), expectedNumberOfResults));
     }
 }

@@ -1,7 +1,7 @@
 @Tests
 Feature: Tests
 
-  @Test @run
+  @Test
   Scenario: [1] Drop-down menu sections check
     Given Open home page
     When Click hamburger menu button
@@ -20,7 +20,7 @@ Feature: Tests
       | NEWS    |
       | FINANCE |
 
-  @Test @run
+  @Test
   Scenario: [4] Search pre-results
     Given Open home page
     And Type "телефон" in Search Field

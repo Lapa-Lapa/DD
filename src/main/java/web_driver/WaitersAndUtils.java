@@ -66,19 +66,16 @@ public class WaitersAndUtils {
         return driver.findElement(locator);
     }
 
-    public static void highlightClickUnhighlightElement(By locator, WebDriver driver) {
-        WebElement element = findElement(locator, driver);
+    public static void highlightAndClickElement(By locator, WebDriver driver) {
+        //WebElement element = findElement(locator, driver);
         waitForElementClickable(locator, driver);
-        highlightElement(element, driver,TRUE);
-        WaitersAndUtils.wait(driver);
+        highlightElement(findElement(locator, driver), driver,TRUE);
         //TODO: Optimize use one time found element - Done
-        element.click();
-        highlightElement(element, driver, FALSE);
+        findElement(locator, driver).click();
     }
 
-    public static void highlightUnhighlightElements(By locator, WebDriver driver) {
+    public static void highlighElements(By locator, WebDriver driver) {
         WebElement element = findElement(locator, driver);
-        waitForAllElementsPresent(locator, driver);
         waitForElementsVisible(locator, driver);
         highlightElement(element, driver, TRUE);
         WaitersAndUtils.wait(driver);

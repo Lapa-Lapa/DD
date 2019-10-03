@@ -13,14 +13,15 @@ public class HomePage extends BasePage {
     private static final Logger LOGGER = Logger.getLogger(HomePage.class);
     private static final String URL = "https://www.tut.by";
 
-    private static final By HAMBURGER_MENU_BUTTON = By.xpath("//span[@class='b-icon icon-burger']");
-    private static final By MENU_SECTION = By.xpath("//ul[@class='b-topbar-more-list']");
+    private static final By HAMBURGER_MENU_BUTTON = By.xpath("//span[contains(@class,'b-icon icon-burger')]");
+    private static final By MENU_SECTION = By.xpath("//ul[contains(@class,'b-topbar-more-list')]");
     //TODO: One dymanic locator - see menuSectionNameLocatorFactory - Done
     private static final By SEARCH_FIELD = By.id("search_from_str");
     //TODO: Locator for SEARCH_RESULTS not case sensitive and word dependent - see searchResultsLocatorFactory - Done
 
     private static By menuSectionNameLocatorFactory(String sectionName) {
-        return By.xpath("//ul[@class='b-topbar-more-list']//a[contains(text(),'" + sectionName + "')]");
+    //TODO: Better to write contains(@class,'smth') - should be more stable - Done
+        return By.xpath("//ul[contains(@class,'b-topbar-more-list')]//a[contains(text(),'" + sectionName + "')]");
     }
     private static By searchResultsLocatorFactory(String sectionName) {
         return By.xpath("//strong[contains(text(),'" + sectionName.toLowerCase() + "')]/parent::a");
@@ -42,7 +43,7 @@ public class HomePage extends BasePage {
     }
 
     public List<String> getMenuList() {
-        WaitersAndUtils.highlightAndClickElement(MENU_SECTION, driver());
+        WaitersAndUtils.highlighElements(MENU_SECTION, driver());
         return new ArrayList<String>(Arrays.asList(driver().findElement(MENU_SECTION).getText().split("\n")));
     }
 
@@ -78,7 +79,7 @@ public class HomePage extends BasePage {
     }
 
     public int getSearchResults(String searchText) {
-        WaitersAndUtils.waitForAllElementsPresent(searchResultsLocatorFactory(searchText), driver());
+        WaitersAndUtils.waitForElementsVisible(searchResultsLocatorFactory(searchText), driver());
         LOGGER.info("Appeared: " + driver().findElements(searchResultsLocatorFactory(searchText)).size() + " search results");
         return driver().findElements(searchResultsLocatorFactory(searchText)).size();
     }
