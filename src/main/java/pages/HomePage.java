@@ -37,12 +37,12 @@ public class HomePage extends BasePage {
     }
 
     public void clickHamburgerMenuButton() {
-        WaitersAndUtils.highlightClickUnhighlightElement(HAMBURGER_MENU_BUTTON, driver());
+        WaitersAndUtils.highlightAndClickElement(HAMBURGER_MENU_BUTTON, driver());
         LOGGER.info("Menu is open");
     }
 
     public List<String> getMenuList() {
-        WaitersAndUtils.highlightUnhighlightElements(MENU_SECTION, driver());
+        WaitersAndUtils.highlightAndClickElement(MENU_SECTION, driver());
         return new ArrayList<String>(Arrays.asList(driver().findElement(MENU_SECTION).getText().split("\n")));
     }
 
@@ -50,13 +50,13 @@ public class HomePage extends BasePage {
         //TODO: (if(x){}else{}-->switch(x){case"y":...default:}) - Done
         switch (menuSectionName) {
             case "NEWS":
-                WaitersAndUtils.highlightClickUnhighlightElement(menuSectionNameLocatorFactory("Новости"), driver());
+                WaitersAndUtils.highlightAndClickElement(menuSectionNameLocatorFactory("Новости"), driver());
                 return new NewsPage();
             case "FINANCE":
-                WaitersAndUtils.highlightClickUnhighlightElement(menuSectionNameLocatorFactory("Финансы"), driver());
+                WaitersAndUtils.highlightAndClickElement(menuSectionNameLocatorFactory("Финансы"), driver());
                 return new FinancePage();
             case "AFISHA":
-                WaitersAndUtils.highlightClickUnhighlightElement(menuSectionNameLocatorFactory("Афиша"), driver());
+                WaitersAndUtils.highlightAndClickElement(menuSectionNameLocatorFactory("Афиша"), driver());
                 return new AfishaPage();
             default:
                 //TODO: (RuntimeException-->Beautiful custom exception) - Done
@@ -65,7 +65,7 @@ public class HomePage extends BasePage {
     }
 
     public void focusSearchField() {
-        WaitersAndUtils.highlightClickUnhighlightElement(SEARCH_FIELD, driver());
+        WaitersAndUtils.highlightAndClickElement(SEARCH_FIELD, driver());
         LOGGER.info("Search field focused");
     }
 
