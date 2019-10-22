@@ -38,10 +38,11 @@ public class HomePageSteps {
     @Then("^Verify that all menu sections present$")
     public void checkAllMenuSectionsPresent() {
         //TODO: Move messages into Asserts - Done
+//        Assert.assertEquals(expected,actual);!!!
         Assert.assertTrue("Actual menu list differs from expected!", ResultsAnalyzer.isListsEqual(homePage.getMenuList(), MenuList.getExpectedMenuList()));
     }
 
-    //TODO: Java doc create for all methogs - Done
+    //TODO: Java doc create for all methogs -
     /**
      * Clicking menu section by its name
      * @param menuSectionName - section that should be present in menu section
@@ -61,7 +62,7 @@ public class HomePageSteps {
     //TODO: Parameters naming fix - Done
     public void typingTextInSearchField(String searchText) {
         homePage.focusSearchField();
-        homePage.sendKeys(searchText);
+        homePage.sendKeysToSearchField(searchText);
     }
 
     /**
@@ -78,6 +79,6 @@ public class HomePageSteps {
      */
     @Then("Verify \"([^\"]+)\" results appear")
     public void checkNumberOfResults(int expectedNumberOfResults) {
-        Assert.assertTrue("Actual number of results differs from expected!", ResultsAnalyzer.isNumbersEqual(homePage.getSearchResults("телефон"), expectedNumberOfResults));
+        Assert.assertTrue("Actual number of results differs from expected!", ResultsAnalyzer.isNumbersEqual(homePage.getCountOfSearchResults("телефон"), null));
     }
 }

@@ -57,7 +57,7 @@ public class WebDriverSingleton {
                 DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
                 desiredCapabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, "ANDROID");
                 desiredCapabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, platformVersion);
-                desiredCapabilities.setCapability(MobileCapabilityType.UDID, UDID);
+                //desiredCapabilities.setCapability(MobileCapabilityType.UDID, UDID); TODO: obligatory MobileCapabilities for Android and IOS!!!
                 desiredCapabilities.setCapability(MobileCapabilityType.NEW_COMMAND_TIMEOUT, 60);
                 desiredCapabilities.setCapability(MobileCapabilityType.BROWSER_NAME, "Chrome");
                 try {

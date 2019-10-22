@@ -80,11 +80,18 @@ public class WaitersAndUtils {
         element.click();
     }
 
+    //TODO:
     public static void highlighElements(By locator, WebDriver driver) {
         WebElement element = findElement(locator, driver);
         waitForElementsVisible(locator, driver);
         highlightElement(element, driver, TRUE);
         WaitersAndUtils.wait(driver);
+    }
+
+    public static void unHighlighElements(By locator, WebDriver driver) {
+        WebElement element = findElement(locator, driver);
+        waitForElementsVisible(locator, driver);
         highlightElement(element, driver, FALSE);
     }
 }
+

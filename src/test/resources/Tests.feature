@@ -7,7 +7,7 @@ Feature: Tests
     When Click hamburger menu button
     Then Verify that all menu sections present
 
-  @Test
+  @Test @run
   Scenario Outline: [2] Pages under menu sections check
     Given Open home page
     And Click hamburger menu button
@@ -17,8 +17,7 @@ Feature: Tests
     Examples:
       | Page    |
       | AFISHA  |
-      | NEWS    |
-      | FINANCE |
+
 
   @Test
   Scenario: [4] Search pre-results
